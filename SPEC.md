@@ -575,18 +575,18 @@ GROUP BY v.vacancy_id;
 Отмечать `[x]` по мере выполнения. Фаза закрыта, когда выполнены все критерии приёмки.
 
 ### Фаза 0. Каркас
-- [ ] Папки по §4, `server/package.json` (`"type": "module"`, скрипты из CLAUDE.md), `.env.example`, `.gitignore`
-- [ ] `src/db.js`, `src/server.js` с `/api/health`, `scripts/db-create.js`
-- [ ] README: запуск в 5 шагов
-- [ ] `git init` + первый коммит
+- [x] Папки по §4, `server/package.json` (`"type": "module"`, скрипты из CLAUDE.md), `.env.example`, `.gitignore`
+- [x] `src/db.js`, `src/server.js` с `/api/health`, `scripts/db-create.js`
+- [x] README: запуск в 5 шагов
+- [x] `git init` + первый коммит
 - **Приёмка:** `npm install && npm run dev` → `GET /api/health` возвращает `ok: true`
 
 ### Фаза 1. PostgreSQL
-- [ ] `01_schema.sql` по §5, перезапускаемый
-- [ ] `02_seed.sql` по §11, включая демо-сценарии D1–D4
-- [ ] `03_queries.sql` (20 запросов по §12)
-- [ ] `04_big_data.sql` (§8)
-- [ ] `scripts/run-sql.js` и `npm run db:reset`
+- [x] `01_schema.sql` по §5, перезапускаемый
+- [x] `02_seed.sql` по §11, включая демо-сценарии D1–D4
+- [x] `03_queries.sql` (20 запросов по §12)
+- [x] `04_big_data.sql` (§8)
+- [x] `scripts/run-sql.js` и `npm run db:reset`
 - **Приёмка:** `db:reset` на пустой базе проходит без ошибок; все 20 запросов выполняются; EXPLAIN показывает Seq Scan до индекса и Index/Bitmap scan после; время выполнения записано
 
 ### Фаза 2. MongoDB
