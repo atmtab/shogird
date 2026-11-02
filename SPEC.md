@@ -595,9 +595,9 @@ GROUP BY v.vacancy_id;
 - **Приёмка:** `events` содержит 60 000 документов, `search_logs` 30 000; все 12 запросов выполняются; ID согласованы с PG
 
 ### Фаза 3. API
-- [ ] Middleware auth, `lib/errors.js`, `lib/validate.js`, `lib/statuses.js`, `lib/events.js`
-- [ ] Все P0-роуты из §9, затем P1
-- [ ] `scripts/smoke.js` (`npm run smoke`): проходит по сценариям D1–D4 и проверяет коды 200/201/400/401/403/404/409
+- [x] Middleware auth, `lib/errors.js`, `lib/validate.js`, `lib/statuses.js`, `lib/events.js`
+- [x] Все P0-роуты из §9, затем P1
+- [x] `scripts/smoke.js` (`npm run smoke`): проходит по сценариям D1–D4 и проверяет коды 200/201/400/401/403/404/409
 - **Приёмка:** `npm run smoke` зелёный; в коде нет SQL, собранного конкатенацией строк
 
 ### Фаза 4. Фронтенд

@@ -26,3 +26,6 @@
 ## MongoDB
 `npm run seed:mongo` (из `server/`) пересоздаёт коллекции и берёт ID из PostgreSQL, поэтому сначала выполните `npm run db:reset`.
 Запросы: `mongosh mongodb://127.0.0.1:27017/shogird --file mongo/02_queries.mongodb.js`.
+
+## Проверка API
+`npm run dev` в одном терминале, `npm run smoke` в другом. Smoke сам делает `db:reset` (только localhost), проходит сценарии D1–D4 и проверяет коды 200/201/400/401/403/404/409.
