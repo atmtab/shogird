@@ -590,8 +590,8 @@ GROUP BY v.vacancy_id;
 - **Приёмка:** `db:reset` на пустой базе проходит без ошибок; все 20 запросов выполняются; EXPLAIN показывает Seq Scan до индекса и Index/Bitmap scan после; время выполнения записано
 
 ### Фаза 2. MongoDB
-- [ ] `01_setup.mongodb.js` + `02_queries.mongodb.js` (§7, §12)
-- [ ] `scripts/seed-mongo.js` (`npm run seed:mongo`) генерирует тот же объём и те же распределения
+- [x] `01_setup.mongodb.js` + `02_queries.mongodb.js` (§7, §12)
+- [x] `scripts/seed-mongo.js` (`npm run seed:mongo`) генерирует тот же объём и те же распределения
 - **Приёмка:** `events` содержит 60 000 документов, `search_logs` 30 000; все 12 запросов выполняются; ID согласованы с PG
 
 ### Фаза 3. API
