@@ -1,0 +1,26 @@
+{
+  "name": "shogird-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:create": "node scripts/db-create.js",
+    "db:reset": "node scripts/run-sql.js ../sql/01_schema.sql ../sql/02_seed.sql",
+    "db:bigdata": "node scripts/run-sql.js ../sql/04_big_data.sql",
+    "seed:mongo": "node scripts/seed-mongo.js",
+    "smoke": "node scripts/smoke.js",
+    "i18n:check": "node scripts/i18n-check.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.8.0",
+    "pg": "^8.12.0"
+  }
+}
