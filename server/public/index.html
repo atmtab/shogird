@@ -1,3 +1,28 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Shogird</title></head>
-<body><p>Shogird</p></body></html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="page.catalog">Shogird</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <section class="hero">
+    <div class="container">
+      <h1 data-i18n="brand.slogan"></h1>
+      <p data-i18n="hero.sub"></p>
+      <div class="search"><input id="q" type="search" data-i18n-placeholder="filter.q" autocomplete="off"></div>
+    </div>
+  </section>
+  <main class="container">
+    <form id="filters" class="filters" onsubmit="return false"></form>
+    <div id="results"></div>
+    <div id="pager" class="pager"></div>
+  </main>
+  <script type="module" src="pages/index.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@ import { pool, withTransaction } from '../db.js';
 import { httpError, wrap } from '../lib/errors.js';
 import { str, int, oneOf, url, isPgError } from '../lib/validate.js';
 import { CITIES, EMPLOYEES } from '../lib/constants.js';
-import { setAuthCookie, clearAuthCookie, requireAuth } from '../middleware/auth.js';
+import { setAuthCookie, clearAuthCookie, optionalAuth } from '../middleware/auth.js';
 
 const router = Router();
 // Хэш-пустышка: при неизвестном email всё равно делаем bcrypt.compare, чтобы время ответа не выдавало существование аккаунта
@@ -87,7 +87,13 @@ router.post('/logout', (req, res) => {
 });
 
 // 9. Кто я
-router.get('/me', requireAuth, wrap(async (req, res) => {
+// Для гостя 401 (как в SPEC §9.2). Фронтенд вызывает с ?optional=true и получает 200 с null: иначе при каждом
+// заходе гостя в консоли браузера краснеет «401 Unauthorized», а SPEC §10.2 требует чистую консоль.
+router.get('/me', optionalAuth, wrap(async (req, res) => {
+  if (!req.user) {
+    if (req.query.optional === 'true') return res.json(null);
+    throw httpError(401, 'UNAUTHORIZED', 'Login required');
+  }
   const r = await pool.query(
     `SELECT u.user_id, u.role, COALESCE(s.student_id, c.company_id) AS profile_id, COALESCE(s.full_name, c.name) AS name
      FROM users u

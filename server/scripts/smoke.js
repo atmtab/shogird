@@ -91,6 +91,7 @@ expect('неизвестный роут API', await guest.get('/api/nothing'), 4
 // ---------- 2. Аутентификация ----------
 console.log('\n== Аутентификация и роли');
 expect('/auth/me без входа', await guest.get('/api/auth/me'), 401, 'UNAUTHORIZED');
+{ const r = await guest.get('/api/auth/me?optional=true'); check('/auth/me?optional=true для гостя: 200 null', r.status === 200 && r.data === null); }
 expect('вход: неверный пароль', await guest.post('/api/auth/login', { email: 'aziza@example.uz', password: 'wrong-password' }), 401, 'INVALID_CREDENTIALS');
 expect('вход: нет такого email (тот же код)', await guest.post('/api/auth/login', { email: 'nobody@example.uz', password: 'wrong-password' }), 401, 'INVALID_CREDENTIALS');
 expect('сломанный JSON', await guest.req('POST', '/api/auth/login', undefined, '{not json'), 400, 'VALIDATION');

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="page.companyPanel">Shogird</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="container">
+    <div class="tabs">
+      <button type="button" data-tab="vacancies" data-i18n="cp.tabVacancies"></button>
+      <button type="button" data-tab="candidates" data-i18n="cp.tabCandidates"></button>
+      <button type="button" data-tab="slots" data-i18n="cp.tabSlots"></button>
+    </div>
+    <section class="tab-panel" id="tab-vacancies"></section>
+    <section class="tab-panel" id="tab-candidates"></section>
+    <section class="tab-panel" id="tab-slots"></section>
+  </main>
+  <script type="module" src="pages/company-panel.js"></script>
+</body>
+</html>
