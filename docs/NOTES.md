@@ -11,7 +11,7 @@
 | Что | Значение |
 |---|---|
 | Node.js / npm / git | 24.18.0 / 11.16.0 / 2.54.0 |
-| PostgreSQL | 17.11, служба `postgresql-x64-17`, `localhost:5432`, пользователь `postgres`, пароль `12345` (только локально) |
+| PostgreSQL | 17.11, служба `postgresql-x64-17`, `localhost:5432`, пользователь `postgres`, пароль задан в локальном `server/.env` |
 | MongoDB | Community Server как служба `MongoDB`, `localhost:27017` |
 | mongosh | `C:\Users\a.tadjitdinov\AppData\Local\Programs\mongosh\mongosh.exe` (в PATH старых терминалов может не быть, откройте новый) |
 | psql | `C:\Program Files\PostgreSQL\17\bin\psql.exe` (в PATH не добавлен) |
