@@ -608,5 +608,5 @@ GROUP BY v.vacancy_id;
 
 ### Фаза 5. Деплой и сдача
 - [ ] Supabase + Atlas + Render по §13; публичный URL работает с телефона
-- [ ] README (запуск, демо-аккаунты, ссылка), `docs/er_diagram.png`, скриншоты в `docs/report/`
+- [x] README (запуск, демо-аккаунты, ссылка), `docs/er_diagram.png`, скриншоты в `docs/report/`
 - **Приёмка:** чек-лист «Step 5 · Final testing checklist» из гайда пройден
