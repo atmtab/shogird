@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="page.admin">Shogird</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="container">
+    <h1 data-i18n="admin.title"></h1>
+    <div class="tabs">
+      <button type="button" data-tab="overview" data-i18n="admin.tabOverview"></button>
+      <button type="button" data-tab="users" data-i18n="admin.tabUsers"></button>
+      <button type="button" data-tab="vacancies" data-i18n="admin.tabVacancies"></button>
+      <button type="button" data-tab="reviews" data-i18n="admin.tabReviews"></button>
+    </div>
+    <section class="tab-panel" id="tab-overview"></section>
+    <section class="tab-panel" id="tab-users"></section>
+    <section class="tab-panel" id="tab-vacancies"></section>
+    <section class="tab-panel" id="tab-reviews"></section>
+  </main>
+  <script type="module" src="pages/admin.js"></script>
+</body>
+</html>

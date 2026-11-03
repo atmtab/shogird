@@ -259,6 +259,41 @@ for (const type of ['apply', 'slot_booked', 'offer_accepted', 'vacancy_view']) {
 }
 check('поиск попал в search_logs', (await mdb.collection('search_logs').countDocuments({ ts: { $gte: startedAt } })) >= 3);
 
+// ---------- 11b. Админ-панель ----------
+console.log('\n== Админ-панель');
+expect('admin: гость -> 401', await guest.get('/api/admin/overview'), 401, 'UNAUTHORIZED');
+expect('admin: студент -> 403', await aziza.get('/api/admin/overview'), 403, 'FORBIDDEN');
+expect('admin: компания -> 403', await reg.get('/api/admin/users'), 403, 'FORBIDDEN');
+const admin = await login('admin@example.uz');
+const adminOv = expect('admin: обзор', await admin.get('/api/admin/overview'), 200);
+check('admin: обзор считает роли и статусы', adminOv.users.admin === 1 && adminOv.users.student >= 40 && adminOv.vacancies.open > 0 && adminOv.applications.accepted >= 1 && adminOv.reviews > 0);
+const usersAll = expect('admin: пользователи', await admin.get('/api/admin/users'), 200);
+check('admin: пользователи, постранично по 20', usersAll.total >= 53 && usersAll.items.length === 20 && !('passwordHash' in usersAll.items[0]));
+const usersQ = expect('admin: поиск по email', await admin.get('/api/admin/users?q=aziza'), 200);
+check('admin: поиск нашёл Азизу', usersQ.total === 1 && usersQ.items[0].name === 'Aziza Karimova');
+expect('admin: страница 0 -> 400', await admin.get('/api/admin/users?page=0'), 400, 'VALIDATION');
+const vOpen = expect('admin: вакансии open', await admin.get('/api/admin/vacancies?status=open'), 200);
+check('admin: фильтр по статусу', vOpen.items.length > 0 && vOpen.items.every((v) => v.status === 'open'));
+expect('admin: неверный статус фильтра -> 400', await admin.get('/api/admin/vacancies?status=zzz'), 400, 'VALIDATION');
+const target = vOpen.items[0].vacancyId;
+expect('admin: закрыть вакансию', await admin.patch(`/api/admin/vacancies/${target}`, { status: 'closed' }), 200);
+expect('admin: повторное закрытие -> 409', await admin.patch(`/api/admin/vacancies/${target}`, { status: 'closed' }), 409, 'INVALID_STATUS');
+check('admin: закрытая вакансия пропала из каталога', (await guest.get(`/api/vacancies?q=${encodeURIComponent(vOpen.items[0].title)}`)).data.items.every((v) => v.vacancyId !== target));
+expect('admin: открыть снова', await admin.patch(`/api/admin/vacancies/${target}`, { status: 'open' }), 200);
+expect('admin: вакансия без мест не открывается (T3 её закрыл)', await admin.patch('/api/admin/vacancies/1', { status: 'open' }), 409, 'INVALID_STATUS');
+expect('admin: статус draft недопустим -> 400', await admin.patch(`/api/admin/vacancies/${target}`, { status: 'draft' }), 400, 'VALIDATION');
+expect('admin: несуществующая вакансия -> 404', await admin.patch('/api/admin/vacancies/999999', { status: 'closed' }), 404, 'NOT_FOUND');
+const revs = expect('admin: отзывы', await admin.get('/api/admin/reviews'), 200);
+check('admin: отзывы с названием компании', revs.total > 0 && revs.items.length === 20 && typeof revs.items[0].companyName === 'string');
+const myReview = revs.items.find((r) => r.companyId === 1 && r.studentId === 2);   // тестовый отзыв этого прогона (раздел отзывов выше)
+check('admin: виден отзыв, созданный студентом', Boolean(myReview));
+if (myReview) {
+  expect('admin: удалить отзыв', await admin.del(`/api/admin/reviews/${myReview.id}`), 200);
+  expect('admin: повторное удаление -> 404', await admin.del(`/api/admin/reviews/${myReview.id}`), 404, 'NOT_FOUND');
+}
+expect('admin: мусорный id отзыва -> 404', await admin.del('/api/admin/reviews/abc'), 404, 'NOT_FOUND');
+expect('admin: logout', await admin.post('/api/auth/logout'), 200);
+
 // ---------- 12. Выход ----------
 console.log('\n== Выход');
 expect('logout', await aziza.post('/api/auth/logout'), 200);

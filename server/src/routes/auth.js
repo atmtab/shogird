@@ -67,7 +67,7 @@ router.post('/login', wrap(async (req, res) => {
   const r = await pool.query(
     `SELECT u.user_id, u.password_hash, u.role,
             COALESCE(s.student_id, c.company_id) AS profile_id,
-            COALESCE(s.full_name, c.name) AS name
+            COALESCE(s.full_name, c.name, u.email) AS name
      FROM users u
      LEFT JOIN students s  ON s.user_id = u.user_id
      LEFT JOIN companies c ON c.user_id = u.user_id
@@ -95,7 +95,7 @@ router.get('/me', optionalAuth, wrap(async (req, res) => {
     throw httpError(401, 'UNAUTHORIZED', 'Login required');
   }
   const r = await pool.query(
-    `SELECT u.user_id, u.role, COALESCE(s.student_id, c.company_id) AS profile_id, COALESCE(s.full_name, c.name) AS name
+    `SELECT u.user_id, u.role, COALESCE(s.student_id, c.company_id) AS profile_id, COALESCE(s.full_name, c.name, u.email) AS name
      FROM users u
      LEFT JOIN students s  ON s.user_id = u.user_id
      LEFT JOIN companies c ON c.user_id = u.user_id

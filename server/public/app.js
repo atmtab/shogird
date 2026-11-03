@@ -168,7 +168,7 @@ export async function mountHeader(active = '') {
   const me = await getMe();
   const el = document.getElementById('site-header');
   const render = () => {
-    const cabinet = me ? (me.role === 'company' ? 'company-panel.html' : 'student.html') : null;
+    const cabinet = me ? ({ company: 'company-panel.html', admin: 'admin.html' }[me.role] || 'student.html') : null;
     const link = (href, key, id) => `<a href="${href}" class="${active === id ? 'active' : ''}">${esc(t(key))}</a>`;
     el.innerHTML = `
       <div class="container header-inner">
@@ -179,7 +179,7 @@ export async function mountHeader(active = '') {
         <nav class="nav">
           ${link('index.html', 'nav.vacancies', 'catalog')}
           ${link('dashboard.html', 'nav.analytics', 'dashboard')}
-          ${me ? link(cabinet, 'nav.cabinet', 'cabinet') + `<button type="button" class="linklike" id="logout-btn">${esc(t('nav.logout'))}</button>`
+          ${me ? link(cabinet, me.role === 'admin' ? 'nav.admin' : 'nav.cabinet', 'cabinet') + `<button type="button" class="linklike" id="logout-btn">${esc(t('nav.logout'))}</button>`
                : link('auth.html', 'nav.login', 'auth')}
         </nav>
       </div>`;

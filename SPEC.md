@@ -441,7 +441,19 @@ GROUP BY v.vacancy_id;
 - `bcryptjs` с cost 10. Пароль не короче 8 символов. Email приводится к нижнему регистру.
 - JWT подписывается `JWT_SECRET` из `.env`, payload `{ userId, role, profileId }`, срок 7 дней.
 - Хранится в httpOnly cookie `shogird_token` с `sameSite: 'lax'` и `secure` в production. На Render нужен `app.set('trust proxy', 1)`.
-- Middleware: `optionalAuth` (ставит `req.user`, если cookie валиден), `requireAuth`, `requireRole('student' | 'company')`.
+- Middleware: `optionalAuth` (ставит `req.user`, если cookie валиден), `requireAuth`, `requireRole('student' | 'company' | 'admin')`.
+
+### 9.8 Админ-панель (добавлена по просьбе владельца после Фазы 5)
+Схема БД не менялась. Все роуты `/api/admin/*` под `requireRole('admin')` (гость 401, остальные роли 403). `GET /auth/me?optional=true` для гостя отвечает 200 `null` (чтобы не было красных 401 в консоли).
+| Роут | Что делает |
+|---|---|
+| `GET /api/admin/overview` | Пользователи по ролям, вакансии и заявки по статусам, число отзывов (Mongo) |
+| `GET /api/admin/users?q&page` | Список пользователей (поиск по email, 20 на страницу). Только просмотр |
+| `GET /api/admin/vacancies?status&page` | Все вакансии, включая черновики и закрытые |
+| `PATCH /api/admin/vacancies/:id` | Body `{ status: 'open' | 'closed' }`. Только open ↔ closed; открыть вакансию без мест нельзя (409 `INVALID_STATUS`) |
+| `GET /api/admin/reviews?page` | Отзывы из Mongo с названием компании |
+| `DELETE /api/admin/reviews/:id` | Удалить отзыв (404 на неверный id) |
+Страница `admin.html` (вкладки: Обзор, Пользователи, Вакансии, Отзывы). Блокировки пользователей нет: нужна новая колонка, то есть изменение схемы.
 
 ---
 
@@ -566,7 +578,7 @@ GROUP BY v.vacancy_id;
 
 ## 15. Вне объёма (делать только по отдельной просьбе)
 
-Графики на Chart.js, симулятор потока событий в реальном времени, Telegram-бот, email и push-уведомления, загрузка PDF-резюме, интерфейс админа и модерация, WebSocket, сброс пароля, OAuth/SSO, полнотекстовый поиск (`pg_trgm`), тёмная тема.
+Графики на Chart.js, симулятор потока событий в реальном времени, Telegram-бот, email и push-уведомления, загрузка PDF-резюме, интерфейс админа и модерация (минимальный вариант сделан после Фазы 5, см. §9.8; расширенные возможности по-прежнему вне объёма), WebSocket, сброс пароля, OAuth/SSO, полнотекстовый поиск (`pg_trgm`), тёмная тема.
 
 ---
 

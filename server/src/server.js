@@ -10,6 +10,7 @@ import catalogRoutes from './routes/catalog.js';
 import studentRoutes from './routes/student.js';
 import companyRoutes from './routes/company.js';
 import statsRoutes from './routes/stats.js';
+import adminRoutes from './routes/admin.js';
 
 // Без секрета JWT подписи были бы бессмысленны, поэтому падаем сразу при старте
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET.startsWith('change-me')) {
@@ -40,6 +41,7 @@ app.get('/api/health', wrap(async (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/company', companyRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/api', catalogRoutes);   // /meta, /vacancies, /vacancies/:id, /companies/:id
 app.use('/api', studentRoutes);   // /me/*, /vacancies/:id/apply, /applications/:id/*, /companies/:id/reviews
 

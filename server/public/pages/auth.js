@@ -9,7 +9,7 @@ let role = 'student';
 const loginEl = document.getElementById('tab-login');
 const registerEl = document.getElementById('tab-register');
 
-const goCabinet = (r) => { location.href = r === 'company' ? 'company-panel.html' : 'student.html'; };
+const goCabinet = (r) => { location.href = { company: 'company-panel.html', admin: 'admin.html' }[r] || 'student.html'; };
 
 // Уже вошедшего сразу отправляем в кабинет
 const me = await getMe();
