@@ -41,7 +41,7 @@ function renderOverview() {
       ${[['admin.kpiUsers', sum(o.users)], ['admin.kpiVacancies', sum(o.vacancies)], ['admin.kpiApplications', sum(o.applications)], ['admin.kpiReviews', o.reviews ?? t('common.none')]]
         .map(([k, v]) => `<div class="kpi"><b>${esc(v)}</b><span>${esc(t(k))}</span></div>`).join('')}
     </div>
-    <div class="two-col">
+    <div class="stat-grid">
       ${countBlock('admin.usersByRole', o.users, 'role.')}
       ${countBlock('admin.vacanciesByStatus', o.vacancies, 'vstatus.')}
       ${countBlock('admin.applicationsByStatus', o.applications, 'status.')}

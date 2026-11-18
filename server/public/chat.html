@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="page.chat">Shogird</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="container">
+    <h1 data-i18n="chat.title"></h1>
+    <p class="note" data-i18n="chat.demo"></p>
+    <section class="chat" id="chat">
+      <aside class="chat-list" id="chat-list"></aside>
+      <div class="chat-conv">
+        <div class="chat-head" id="chat-head"></div>
+        <div class="chat-msgs" id="chat-msgs" aria-live="polite"></div>
+        <form class="chat-form" id="chat-form" autocomplete="off">
+          <input id="chat-input" type="text" maxlength="500" data-i18n-placeholder="chat.placeholder">
+          <button class="send" type="submit" data-i18n-title="chat.send">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.3 10l12.6 2-12.6 2z" fill="currentColor"/></svg>
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="pages/chat.js"></script>
+</body>
+</html>

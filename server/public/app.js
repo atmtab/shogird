@@ -179,6 +179,7 @@ export async function mountHeader(active = '') {
         <nav class="nav">
           ${link('index.html', 'nav.vacancies', 'catalog')}
           ${link('dashboard.html', 'nav.analytics', 'dashboard')}
+          ${link('chat.html', 'nav.chat', 'chat')}
           ${me ? link(cabinet, me.role === 'admin' ? 'nav.admin' : 'nav.cabinet', 'cabinet') + `<button type="button" class="linklike" id="logout-btn">${esc(t('nav.logout'))}</button>`
                : link('auth.html', 'nav.login', 'auth')}
         </nav>

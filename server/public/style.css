@@ -68,7 +68,7 @@ main { padding: 20px 0 56px; min-height: 70vh; }
 .nav { display: flex; align-items: center; gap: 2px; width: 100%; overflow-x: auto; scrollbar-width: none; padding: 2px 0; }
 .nav::-webkit-scrollbar { display: none; }
 .nav a, .linklike {
-  color: var(--ink); font-weight: 600; font-size: 15px; padding: 7px 14px; border-radius: 999px; white-space: nowrap;
+  color: var(--ink); font-weight: 600; font-size: 15px; padding: 7px 10px; border-radius: 999px; white-space: nowrap;
   transition: background .2s var(--ease), color .2s var(--ease);
 }
 .nav a:hover, .linklike:hover { background: rgba(31, 60, 136, .08); text-decoration: none; }
@@ -77,7 +77,7 @@ main { padding: 20px 0 56px; min-height: 70vh; }
 .lang-switch { display: flex; gap: 2px; padding: 3px; background: rgba(27, 31, 42, .07); border-radius: 999px; }
 .lang-switch button { background: transparent; color: var(--muted); border: 0; padding: 5px 11px; font: 700 12px inherit; cursor: pointer; border-radius: 999px; transition: all .2s var(--ease); }
 .lang-switch button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 4px rgba(27, 31, 42, .18); }
-@media (min-width: 720px) { .nav { width: auto; margin-left: auto; } .header-inner.container { flex-wrap: nowrap; } .lang-switch { order: 3; } }
+@media (min-width: 720px) { .nav a, .linklike { padding: 7px 14px; } .nav { width: auto; margin-left: auto; } .header-inner.container { flex-wrap: nowrap; } .lang-switch { order: 3; } }
 
 /* ---------- Hero ---------- */
 .hero { padding: 14px 16px 0; }
@@ -245,8 +245,58 @@ textarea { min-height: 100px; resize: vertical; }
 .back:hover { text-decoration: none; background: var(--glass-strong); }
 .two-col { display: grid; gap: 16px; }
 @media (min-width: 860px) { .two-col { grid-template-columns: 2fr 1fr; align-items: start; } }
+/* Блоки со счётчиками: равные колонки, карточки растягиваются до одной высоты (grid по умолчанию align-items: stretch) */
+.stat-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+.stat-grid .card + .card { margin-top: 0; }
 .cand .head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 .note { background: rgba(226, 169, 59, .14); border-left: 3px solid var(--zar); padding: 9px 13px; border-radius: 4px 12px 12px 4px; margin: 8px 0; font-size: 14px; }
+
+/* ---------- Демо-чат (стиль Telegram на стекле) ---------- */
+.chat {
+  display: grid; grid-template-columns: 1fr; height: calc(100dvh - 250px); min-height: 440px; max-height: 760px; overflow: hidden;
+  background: var(--card); border: 1px solid var(--glass-edge); border-radius: var(--radius);
+  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); box-shadow: var(--shadow), var(--highlight);
+}
+.chat-list { overflow-y: auto; padding: 8px; }
+.chat-conv { display: none; flex-direction: column; min-width: 0; min-height: 0; background: rgba(255, 255, 255, .35); }
+.chat.in-conv .chat-list { display: none; }
+.chat.in-conv .chat-conv { display: flex; }
+@media (min-width: 760px) {
+  .chat { grid-template-columns: 320px 1fr; }
+  .chat-list { border-right: 1px solid var(--line); }
+  .chat-conv, .chat.in-conv .chat-conv { display: flex; }
+  .chat.in-conv .chat-list { display: block; }
+  .chat-back { display: none; }
+}
+.avatar { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 15px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4); }
+.chat-item { display: flex; gap: 12px; align-items: center; width: 100%; text-align: left; padding: 10px; border: 0; background: none; border-radius: 16px; cursor: pointer; font: inherit; color: inherit; min-height: 64px; transition: background .2s; }
+.chat-item:hover { background: rgba(31, 60, 136, .07); }
+.chat-item.active { background: var(--lapis); color: #fff; }
+.chat-item-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.chat-item-top, .chat-item-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.chat-item-top small { color: var(--muted); font-size: 12px; flex: none; }
+.chat-preview { color: var(--muted); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.chat-preview em { font-style: normal; color: var(--lapis); }
+.chat-item.active small, .chat-item.active .chat-preview, .chat-item.active .chat-preview em { color: rgba(255, 255, 255, .85); }
+.unread { flex: none; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--firuza); color: #fff; font-size: 12px; font-weight: 800; display: grid; place-items: center; }
+.chat-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--glass); min-height: 64px; }
+.chat-head .avatar { width: 40px; height: 40px; font-size: 14px; }
+.chat-head-info { display: flex; flex-direction: column; min-width: 0; }
+.chat-head-info small { color: var(--muted); font-size: 13px; }
+.typing-txt { color: var(--firuza); font-weight: 600; }
+.chat-msgs { flex: 1; min-height: 0; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.bubble { max-width: 82%; padding: 8px 12px 6px; border-radius: 18px; line-height: 1.4; box-shadow: 0 1px 3px rgba(27, 31, 42, .10); animation: rise .3s var(--ease); }
+.bubble small { display: block; text-align: right; font-size: 11px; margin-top: 2px; opacity: .65; }
+.bubble.in { align-self: flex-start; background: #fff; border-bottom-left-radius: 6px; }
+.bubble.out { align-self: flex-end; background: linear-gradient(180deg, #2c52b3, var(--lapis)); color: #fff; border-bottom-right-radius: 6px; }
+.bubble.typing { display: flex; gap: 4px; padding: 14px 14px; }
+.bubble.typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite; }
+.bubble.typing i:nth-child(2) { animation-delay: .2s; } .bubble.typing i:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 60%, 100% { opacity: .25; } 30% { opacity: 1; } }
+.chat-form { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--line); background: var(--glass); }
+.chat-form input { border-radius: 999px; padding-left: 18px; }
+.send { flex: none; width: 44px; height: 44px; border: 0; border-radius: 50%; cursor: pointer; color: #fff; display: grid; place-items: center; background: linear-gradient(180deg, #19bcbc, var(--firuza)); box-shadow: 0 4px 12px rgba(15, 163, 163, .35); transition: transform .2s var(--ease); }
+.send:active { transform: scale(.92); }
 
 /* ---------- Запасные варианты ---------- */
 /* Без поддержки размытия (старые браузеры) или при системной настройке «уменьшить прозрачность» делаем панели плотнее, чтобы текст читался */
